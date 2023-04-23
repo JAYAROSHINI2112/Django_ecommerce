@@ -1,0 +1,59 @@
+<html>
+ 
+<head>
+    <title>Classes | Details</title>
+    <style>
+        table {
+            margin-left: 550px;
+            margin-top: 150px;
+            column-width: 20px;
+            font-size: 20px;
+            border: 5px solid black;
+            padding: 5px;
+        }
+ 
+        thead {
+            padding: 10px;
+        }
+ 
+        tbody {
+            padding: 10px;
+        }
+    </style>
+</head>
+ 
+<body>
+    <h3 style="margin-left:700px;">Add Classes</h3>
+    <p style="margin-left:720px;"><a href="{% url 'classes:addclasses' %}">Register</a></p>
+    <div class="container"> 
+        <table border="5px solid #000;">
+            <tbody>
+ 
+                <thead>
+                    <tr>
+                        <th>Class</th>
+                        <!-- <th>Session</th>
+                        <th>Register on</th> -->
+                        <th>Options</th>
+                    </tr>
+ 
+                </thead>
+            <tbody>
+                {% for i in obj %}
+                <tr>
+                    <td style="padding:10px;">{{i.cclass}}</td>
+                    <!-- <td style="padding:10px;">{{i.csession}}</td>
+                    <td style="padding:10px;">{{i.cdate|date:"M d, Y"}}</td> -->
+                    <td style="padding:10px;">
+                        <!-- <a href="{% url 'classes:editclasses' i.id %}">Edit</a> -->
+                        <a href="{% url 'classes:deleteclasses' i.id %}">Delete</a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+            </tbody>
+        </table>
+    </div>
+</body>
+ 
+</html>

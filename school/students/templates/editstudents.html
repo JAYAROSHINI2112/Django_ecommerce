@@ -1,0 +1,54 @@
+<html>
+ 
+<head>
+    <title>C.R.U.D</title>
+    <style>
+        .container {
+            margin-left: 550px;
+            margin-top: 150px;
+            width: 300px;
+            height: 100px;
+            padding: 15px;
+            background-color: aquamarine;
+        }
+    </style>
+</head>
+ 
+<body>
+
+    <h3 style="margin-left:650px;">Edit | Students</h3>
+    <p style="margin-left:700px;"><a href="{% url 'viewstudents' %}">View</a></p>
+    <div class="container">
+        <table>
+            <tbody>
+                <form method="POST">
+                    {% csrf_token %}
+                    <tr>
+                        <td> Name</td>
+                        <td><input type="text" name="name" value={{object.sname}}></td>
+                    </tr>
+                    <tr>
+                        <td> Class</td>
+                        <td>
+                            <select name="class">
+                                <option value="{{clreg.id}}">{{clreg.cclass}}</option>
+                            {% for i in iter %}
+                               <option value="{{i.id}}">{{i.cclass}}</option>
+                            {% endfor %}
+                            </select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td> Session</td>
+                        <td><input type="text" name="session" value={{object.ssession}}></td>
+                    </tr>
+                    <tr>
+                        <td><button>Submit</button></td>
+                    </tr>
+                </form>
+            </tbody>
+        </table>
+    </div>
+</body>
+ 
+</html>

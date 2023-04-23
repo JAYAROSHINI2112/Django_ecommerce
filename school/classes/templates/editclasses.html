@@ -1,0 +1,43 @@
+<html>
+ 
+<head>
+    <title>Classes | Edit</title>
+    <style>
+        .container {
+            margin-left: 550px;
+            margin-top: 150px;
+            width: 300px;
+            height: 100px;
+            padding: 15px;
+            background-color: aquamarine;
+        }
+    </style>
+</head>
+ 
+<body>
+
+    <h3 style="margin-left:650px;">Edit | Classes</h3>
+    <p style="margin-left:700px;"><a href="{% url 'classes:viewclasses' %}">View</a></p>
+    <div class="container">
+        <table>
+            <tbody>
+                <form method="POST">
+                    {% csrf_token %}
+                    <tr>
+                        <td> Class</td>
+                        <td><input type="text" name="class" value={{object.cclass}}></td>
+                    </tr>
+                    <!-- <tr>
+                        <td> Session</td>
+                        <td><input type="text" name="session" value={{object.csession}}></td>
+                    </tr> -->
+                    <tr>
+                        <td><button>Submit</button></td>
+                    </tr>
+                </form>
+            </tbody>
+        </table>
+    </div>
+</body>
+ 
+</html>
