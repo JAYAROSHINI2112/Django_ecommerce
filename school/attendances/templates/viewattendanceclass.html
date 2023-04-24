@@ -29,7 +29,9 @@
                 <tr>
                     <th scope="row">{{forloop.counter}}</th>
                     <td>{{i.data}}</td>
-                    <td><a type="button" class="btn btn-outline-primary" href="{% url 'attendanceentry' id i.id%}">View</a>
+                    <td>
+                        <a type="button" class="btn btn-outline-primary" href="{% url 'attendanceentry' id i.id%}">View</a>
+                        <a type="button" class="btn btn-outline-danger" href="{% url 'deleteattendanceclass' id i.id%}">Delete</a>
                       
                 </tr>
             {% endfor %}

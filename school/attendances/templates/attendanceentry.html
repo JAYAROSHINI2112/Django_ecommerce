@@ -12,36 +12,70 @@
 <body>
     <nav class="navbar navbar-light bg-light justify-content-between">
         <a class="navbar-brand">Add Details </a>
-            <a class="btn btn-success my-2 my-sm-6" href="# ">+ Add </a>
+            <a class="btn btn-success my-2 my-sm-6" href="# ">Back </a>
     </nav>
     <table class="table table-borderless" style="margin: 50px;">
         <thead>
-        <h5 class="blockquote text-right" style="margin: 50px;">Entry {{var.cclass}}th Std</h5>
+        <h5 class="blockquote text-right" style="margin: 50px;">Entry {{clas.cclass}} th Std</h5>
           <tr>
             <th scope="col">S.No</th>
             <th scope="col">Name</th>
             <th scope="col">Options</th>
-            <th scope="col">Cid</th>
-            <th scope="col">Did</th>
-
             </tr>
         </thead>
         <tbody>
+            
             {% for i in studs %}
+            {% if obj == 0 %}
                 <tr>
+                   <form method="POST">
+                    {% csrf_token  %}
                     <th scope="row">{{forloop.counter}}</th>
                     <td>{{i.sname}}</td>
-                    <td><!-- Default checked -->
-                        <div class="custom-control custom-radio">
-                          <input type="radio" class="custom-control-input" id="defaultChecked2" name="defaultExample2" >
-                          <label class="custom-control-label" for="defaultChecked2">Present</label>
-                          <input type="radio" class="custom-control-input" id="defaultChecked2" name="defaultExample2" >
-                          <label class="custom-control-label" for="defaultChecked2">Absent</label>
+                    <td>
+                        
+									<select name="val{{i.id}}"required >
+										<option>--Select Value--</option>
+										<option value="1">Present</option>
+										<option value="0">Absent</option>
+									</select>
+                        </td>
+                          <td><input type="hidden" class="form-control" id="class"  name="sid{{i.id}}" value="{{i.id}}" readonly></td>
+                          <td><input type="hidden" class="form-control" id="class"  name="cid{{i.id}}" value="{{clas.id}}" readonly></td>
+                          <td><input type="hidden" class="form-control" id="class"  name="did{{i.id}}" value="{{date.id}}" readonly></td>
                         </div>
                     </td>
                      
-                </tr>
+               
+               {% else %}
+               <tr>
+                <form method="POST">
+                 {% csrf_token  %}
+                 <th scope="row">{{forloop.counter}}</th>
+                 <td>{{i.sname}}</td>
+                 <td>
+                     
+                                 <select name="val{{i.id}}"required  >
+                                   {% for k in selectfield %} 
+                                    <option value="{{k.pafield}}">{{k.pafield}}</option>
+                                     {% endfor %}
+                                    <option data-id="{{currency.id}}" value="{{countries.id}}" {% if countries.id == signatory.cur rency.id %} selected {% endif %}>{{countries.currency}}</option>
+
+                                    <option value="1">Present</option>
+                                    <option value="0">Absent</option>
+                                 </select>
+                     </td>
+                       <td><input type="text" class="form-control" id="class"  name="sid{{i.id}}" value="{{i.id}}" readonly></td>
+                       <td><input type="text" class="form-control" id="class"  name="cid{{i.id}}" value="{{clas.id}}" readonly></td>
+                       <td><input type="text" class="form-control" id="class"  name="did{{i.id}}" value="{{date.id}}" readonly></td>
+                     </div>
+                 </td>
+                
+               {% endif %}
             {% endfor %}
+               <td> <button type="submit" class="btn btn-primary">Submit</button></td>
+            </tr>
+        </form>
         </tbody>
     </table>
 </body>

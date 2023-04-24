@@ -28,11 +28,33 @@ def addattendance(request,id):
     else: 
         obj = classesregister.objects.get(id=id)
         return render(request,'addattendancedate.html',{'obj':obj})
+ 
+ 
+def deleteattendanceclass(request,did,id):
+        attendclassmaster.objects.filter(id=id).delete()
+        return redirect('viewattendanceclass',did)
+
     
-    
-def attendanceentry(request,cid,did):
-    clas = classesregister.objects.get(id=cid)
-    date = attendclassmaster.objects.get(id=did)
-    studs = studentsregister.objects.filter(sclass_id=cid)
-    content = {'clas':clas,'date':date,'studs':studs}
-    return render(request,'attendanceentry.html',content)
+def attendanceentrys(request,cid,did):
+    if request.method == "POST":
+        studs = studentsregister.objects.filter(sclass_id=cid)
+        for j in studs:
+            sid =  request.POST.get(f'sid{j.id}')
+            cid = request.POST.get(f'cid{j.id}')
+            did = request.POST.get(f'did{j.id}')
+            pid = request.POST.get(f'val{j.id}')
+            attendanceentry.objects.create(studid=sid,classid=cid,dateid=did,pafield=pid)
+            # attendanceentry.objects.create(studid=request.POST.get(f'sid{j.id}'),classid=request.POST.get(f'cid{j.id}'),dateid=request.POST.get(f'did{j.id}'),pafield=request.POST.get(f'val{j.id}'))
+            # print(j.id,"--",sid,cid,did,pid)
+        return redirect('viewattendanceclass',cid)
+   
+    else:     
+        clas = classesregister.objects.get(id=cid)
+        date = attendclassmaster.objects.get(id=did)
+        studs = studentsregister.objects.filter(sclass_id=cid)
+        obj = attendanceentry.objects.filter(classid=cid).filter(dateid=did)
+        selectfield = attendanceentry.objects.filter(classid=cid).filter(dateid=did)
+        # print('obj',selectfield)
+        content = {'clas':clas,'date':date,'studs':studs,'obj':obj.count(),'selectfield':selectfield}
+        # print('clas',clas,'date',date,'studs',studs)
+        return render(request,'attendanceentry.html',content)
