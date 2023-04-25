@@ -38,14 +38,23 @@ def deleteattendanceclass(request,did,id):
 def attendanceentrys(request,cid,did):
     if request.method == "POST":
         studs = studentsregister.objects.filter(sclass_id=cid)
+        objcount = request.POST['objcount']   
+        print('objcount',objcount)
         for j in studs:
             sid =  request.POST.get(f'sid{j.id}')
             cid = request.POST.get(f'cid{j.id}')
             did = request.POST.get(f'did{j.id}')
             pid = request.POST.get(f'val{j.id}')
-            attendanceentry.objects.create(studid=sid,classid=cid,dateid=did,pafield=pid)
+            uid = request.POST.get(f'uid{j.id}')
+            # print(j,"--",sid,cid,did,pid,objcount)
+            # attendanceentry.objects.create(studid=sid,classid=cid,dateid=did,pafield=pid)
+            if objcount == '0':
+                attendanceentry.objects.create(studid=sid,classid=cid,dateid=did,pafield=pid)
+            else:
+                print(j,"--",sid,cid,did,pid,objcount,uid)
+                attendanceentry.objects.filter(id=uid).update(studid=sid,classid=cid,dateid=did,pafield=pid)
             # attendanceentry.objects.create(studid=request.POST.get(f'sid{j.id}'),classid=request.POST.get(f'cid{j.id}'),dateid=request.POST.get(f'did{j.id}'),pafield=request.POST.get(f'val{j.id}'))
-            # print(j.id,"--",sid,cid,did,pid)
+            # print(j.id,"--",pid)
         return redirect('viewattendanceclass',cid)
    
     else:     
@@ -53,8 +62,9 @@ def attendanceentrys(request,cid,did):
         date = attendclassmaster.objects.get(id=did)
         studs = studentsregister.objects.filter(sclass_id=cid)
         obj = attendanceentry.objects.filter(classid=cid).filter(dateid=did)
-        selectfield = attendanceentry.objects.filter(classid=cid).filter(dateid=did)
-        # print('obj',selectfield)
-        content = {'clas':clas,'date':date,'studs':studs,'obj':obj.count(),'selectfield':selectfield}
+        object = attendanceentry.objects.filter(classid=cid).filter(dateid=did)
+        sfield = selectfield.objects.all()
+        print('obj',obj)
+        content = {'clas':clas,'date':date,'studs':studs,'obj':obj.count(),'object':object,'sfield':sfield}
         # print('clas',clas,'date',date,'studs',studs)
         return render(request,'attendanceentry.html',content)

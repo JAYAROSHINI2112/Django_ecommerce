@@ -34,10 +34,13 @@
                     <td>{{i.sname}}</td>
                     <td>
                         
-									<select name="val{{i.id}}"required >
+									<select name="val{{i.id}}"required>
 										<option>--Select Value--</option>
-										<option value="1">Present</option>
-										<option value="0">Absent</option>
+										<!-- <option value="1">Present</option>
+										<option value="0">Absent</option> -->
+                    {% for j in sfield%}
+										<option value="{{j.id}}">{{j.name}}</option>
+                    {% endfor %}
 									</select>
                         </td>
                           <td><input type="hidden" class="form-control" id="class"  name="sid{{i.id}}" value="{{i.id}}" readonly></td>
@@ -55,24 +58,34 @@
                  <td>{{i.sname}}</td>
                  <td>
                      
-                                 <select name="val{{i.id}}"required  >
-                                   {% for k in selectfield %} 
-                                    <option value="{{k.pafield}}">{{k.pafield}}</option>
-                                     {% endfor %}
-                                    <option data-id="{{currency.id}}" value="{{countries.id}}" {% if countries.id == signatory.cur rency.id %} selected {% endif %}>{{countries.currency}}</option>
-
-                                    <option value="1">Present</option>
-                                    <option value="0">Absent</option>
-                                 </select>
+                  <select name="val{{i.id}}"required  >
+                     {% for k in sfield %} 
+                      <option value="{{k.id}}"
+                      {% for j in object %}
+                        {% if i.id == j.studid %}
+                        {% if j.pafield == k.id%} 
+                        selected {% endif %}{% endif %}{% endfor %}>{{k.name}}
+                    </option>
+                     {% endfor %}
+                  
+                    </select>
                      </td>
-                       <td><input type="text" class="form-control" id="class"  name="sid{{i.id}}" value="{{i.id}}" readonly></td>
-                       <td><input type="text" class="form-control" id="class"  name="cid{{i.id}}" value="{{clas.id}}" readonly></td>
-                       <td><input type="text" class="form-control" id="class"  name="did{{i.id}}" value="{{date.id}}" readonly></td>
-                     </div>
+                       <td><input type="hidden" class="form-control" id="class"  name="sid{{i.id}}" value="{{i.id}}" readonly></td>
+                       <td><input type="hidden" class="form-control" id="class"  name="cid{{i.id}}" value="{{clas.id}}" readonly></td>
+                       <td><input type="hidden" class="form-control" id="class"  name="did{{i.id}}" value="{{date.id}}" readonly></td>
+                       <td><input type="hidden" class="form-control" id="class"  name="uid{{i.id}}" value=
+                        {% for k in object %}
+                          {% if k.studid == i.id %}
+                              "{{k.id}}" 
+                          {% endif %}
+                        {% endfor %}>
+                        </td>
+                      </div>
                  </td>
-                
-               {% endif %}
+          {% endif %}
+          
             {% endfor %}
+            <td><input type="hidden" class="form-control" id="class"  name="objcount" value="{{obj}}" readonly></td>
                <td> <button type="submit" class="btn btn-primary">Submit</button></td>
             </tr>
         </form>
